@@ -1,6 +1,8 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 const pageTitle = "关于";
 
 const identity = {
@@ -29,6 +31,30 @@ const fontSize = "1.5rem";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+     
+	</head>
+	<body>
+        <BaseLayout pageTitle={pageTitle}>
+            <p>以下是关于我的几个事实：</p>
+            <ul>
+                <li class="name">我的名字是{identity.firstName}.</li>
+                <li>我住在{identity.country}。我的职业是{identity.occupation}。</li>
+                {identity.hobbies.length >= 2 &&
+                    <li>我的两个习惯：{identity.hobbies[0]}和{identity.hobbies[1]}</li>
+                }
+            </ul>
+            <p>我的技能是：</p>
+            <ul>
+            {skills.map((skill) => <li>{skill}</li>)}
+            </ul>
+
+            {happy && <p>我非常乐意学习 Astro！</p>}
+
+            {finished && <p>我完成了这节教程！</p>}
+
+            {goal === 2 ? <p>我的目标是在三天内完成。</p> : <p>我的目标不是 3 天。</p>}
+        </BaseLayout>
+
         <style define:vars={{nameColor, fontWeight, fontSize}}>
             h1 {
                 color: purple;
@@ -40,30 +66,6 @@ const fontSize = "1.5rem";
                 font-size: var(--fontSize);
             }
         </style>
-	</head>
-	<body>
-        <a href="/">首页</a>
-        <a href="/about/">{pageTitle}</a>
-        <a href="/blog/">文章</a>
 
-        <h1>{pageTitle}</h1>
-        <p>以下是关于我的几个事实：</p>
-        <ul>
-            <li class="name">我的名字是{identity.firstName}.</li>
-            <li>我住在{identity.country}。我的职业是{identity.occupation}。</li>
-            {identity.hobbies.length >= 2 &&
-                <li>我的两个习惯：{identity.hobbies[0]}和{identity.hobbies[1]}</li>
-            }
-        </ul>
-        <p>我的技能是：</p>
-        <ul>
-        {skills.map((skill) => <li>{skill}</li>)}
-        </ul>
-
-        {happy && <p>我非常乐意学习 Astro！</p>}
-
-        {finished && <p>我完成了这节教程！</p>}
-
-        {goal === 2 ? <p>我的目标是在三天内完成。</p> : <p>我的目标不是 3 天。</p>}
 </body>
 </html>
